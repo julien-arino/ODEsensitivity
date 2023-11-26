@@ -21,7 +21,7 @@ There are two methods for this generic function:
   \code{\link{DDEsobol.default}} (for general DDE models).
 }
 \seealso{
-
+\code{\link{DDEsobol.default}}
 }
 \author{
 Frank Weber

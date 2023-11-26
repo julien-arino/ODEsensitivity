@@ -15,7 +15,7 @@
 #'   \code{\link{DDEsobol.default}} (for general DDE models).
 #'
 #' @author Frank Weber
-#' @seealso \code{\link{DDEsobol.default}
+#' @seealso \code{\link{DDEsobol.default}}
 #' 
 #' @export
 #'

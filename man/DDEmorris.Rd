@@ -21,7 +21,7 @@ There are two methods for this generic function:
   \code{\link{DDEmorris.default}} (for general DDE models).
 }
 \seealso{
-
+\code{\link{DDEmorris.default}}
 }
 \author{
 Frank Weber

@@ -15,7 +15,7 @@
 #'   \code{\link{DDEmorris.default}} (for general DDE models).
 #'
 #' @author Frank Weber
-#' @seealso \code{\link{DDEmorris.default}
+#' @seealso \code{\link{DDEmorris.default}}
 #' 
 #' @export
 #'
