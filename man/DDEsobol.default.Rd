@@ -22,7 +22,7 @@
 \arguments{
 \item{mod}{[\code{function(Time, State, Pars)}]\cr
 model to examine, supplied in the manner as needed for 
-\code{\link[deSolve]{ode}} (see example below).}
+\code{\link[deSolve]{dede}} (see example below).}
 
 \item{pars}{[\code{character(k)}]\cr
 names of the parameters to be included as input variables in the Sobol'
@@ -90,7 +90,7 @@ List of length \code{length(state_init)} and of class \code{DDEsobol}
  models.
 }
 \details{
-Function \code{\link[deSolve]{ode}} from \code{\link[deSolve]{deSolve}} is 
+Function \code{\link[deSolve]{dede}} from \code{\link[deSolve]{deSolve}} is 
   used to solve the DDE system.
   
   The sensitivity analysis is done for all state variables and all
@@ -216,7 +216,7 @@ J. O. Ramsay, G. Hooker, D. Campbell and J. Cao, 2007,
 \seealso{
 \code{\link[sensitivity]{soboljansen},
   \link[sensitivity]{sobolmartinez},
-  \link{plot.DDEsobol}}
+  \link{plot.ODEsobol}}
 }
 \author{
 Stefan Theers, Frank Weber

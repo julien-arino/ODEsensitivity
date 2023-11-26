@@ -2,12 +2,12 @@
 #'
 #' @description
 #' \code{DDEmorris.default} is the default method of \code{\link{DDEmorris}}. It
-#' performs a sensitivity analysis for general DDE models using the Morris 
+#' performs a sensitivity analysis for DDE models using the Morris 
 #' screening method.
 #'
 #' @param mod [\code{function(Time, State, Pars)}]\cr
 #'   model to examine, supplied in the manner as needed for 
-#'   \code{\link[deSolve]{ode}} (see example below).
+#'   \code{\link[deSolve]{dede}} (see example below).
 #' @param pars [\code{character(k)}]\cr
 #'   names of the parameters to be included as input variables in Morris 
 #'   screening.
@@ -57,7 +57,7 @@
 #'   timepoints).
 #'
 #' @details
-#'   Function \code{\link[deSolve]{ode}} from \code{\link[deSolve]{deSolve}} is 
+#'   Function \code{\link[deSolve]{dede}} from \code{\link[deSolve]{deSolve}} is 
 #'   used to solve the DDE system.
 #'   
 #'   The sensitivity analysis is done for all state variables and all
@@ -84,7 +84,7 @@
 #'   \emph{Parameter estimation for differential equations: a generalized 
 #'   smoothing approach}, Journal of the Royal Statistical Society, Series B, 
 #'   69, Part 5, 741--796.
-#' @seealso \code{\link[sensitivity]{morris}, \link{plot.DDEmorris}}
+#' @seealso \code{\link[sensitivity]{morris}, \link{plot.ODEmorris}}
 #' 
 #' @examples
 #' ##### Lotka-Volterra equations #####
@@ -232,7 +232,7 @@ DDEmorris.default <- function(mod,
       # Run one_par() on parallel nodes:
       local_cluster <- parallel::makePSOCKcluster(names = parallel_eval_ncores)
       parallel::clusterExport(local_cluster, 
-                              varlist = c("dede", "mod", "state_init", "z", "X",
+                              varlist = c("dede", "lag", "mod", "state_init", "z", "X",
                                           "times", "timesNum", "ode_method"),
                               envir = environment())
       res_per_par <- parallel::parSapply(local_cluster, 1:nrow(X), one_par, 

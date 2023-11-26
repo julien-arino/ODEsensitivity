@@ -23,7 +23,7 @@
 \arguments{
 \item{mod}{[\code{function(Time, State, Pars)}]\cr
 model to examine, supplied in the manner as needed for 
-\code{\link[deSolve]{ode}} (see example below).}
+\code{\link[deSolve]{dede}} (see example below).}
 
 \item{pars}{[\code{character(k)}]\cr
 names of the parameters to be included as input variables in Morris 
@@ -86,11 +86,11 @@ List of class \code{DDEmorris} of length \code{length(state_init)}
 }
 \description{
 \code{DDEmorris.default} is the default method of \code{\link{DDEmorris}}. It
-performs a sensitivity analysis for general DDE models using the Morris 
+performs a sensitivity analysis for DDE models using the Morris 
 screening method.
 }
 \details{
-Function \code{\link[deSolve]{ode}} from \code{\link[deSolve]{deSolve}} is 
+Function \code{\link[deSolve]{dede}} from \code{\link[deSolve]{deSolve}} is 
   used to solve the DDE system.
   
   The sensitivity analysis is done for all state variables and all
@@ -190,7 +190,7 @@ J. O. Ramsay, G. Hooker, D. Campbell and J. Cao, 2007,
   69, Part 5, 741--796.
 }
 \seealso{
-\code{\link[sensitivity]{morris}, \link{plot.DDEmorris}}
+\code{\link[sensitivity]{morris}, \link{plot.ODEmorris}}
 }
 \author{
 Stefan Theers, Frank Weber

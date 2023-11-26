@@ -7,7 +7,7 @@
 #'
 #' @param mod [\code{function(Time, State, Pars)}]\cr
 #'   model to examine, supplied in the manner as needed for 
-#'   \code{\link[deSolve]{ode}} (see example below).
+#'   \code{\link[deSolve]{dede}} (see example below).
 #' @param pars [\code{character(k)}]\cr
 #'   names of the parameters to be included as input variables in the Sobol'
 #'   sensitivity analysis.
@@ -59,7 +59,7 @@
 #'   \code{"Martinez"}).
 #'
 #' @details
-#'   Function \code{\link[deSolve]{ode}} from \code{\link[deSolve]{deSolve}} is 
+#'   Function \code{\link[deSolve]{dede}} from \code{\link[deSolve]{deSolve}} is 
 #'   used to solve the DDE system.
 #'   
 #'   The sensitivity analysis is done for all state variables and all
@@ -94,7 +94,7 @@
 #'   69, Part 5, 741--796.
 #' @seealso \code{\link[sensitivity]{soboljansen},
 #'   \link[sensitivity]{sobolmartinez},
-#'   \link{plot.DDEsobol}}
+#'   \link{plot.ODEsobol}}
 #' 
 #' @examples
 #' ##### Lotka-Volterra equations #####

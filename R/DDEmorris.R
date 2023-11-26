@@ -6,20 +6,16 @@
 #'
 #' @param mod
 #'   either a model function supplied in the manner as needed for 
-#'   \code{\link[deSolve]{ode}} (for \code{\link{DDEmorris.default}}) or an 
-#'   object of class \code{DDEnetwork} (for \code{\link{DDEmorris.DDEnetwork}}).
+#'   \code{\link[deSolve]{ode}} (for \code{\link{DDEmorris.default}}).
 #' @param ...
-#'   further arguments passed to methods, see \code{\link{DDEmorris.default}} 
-#'   and \code{\link{DDEmorris.DDEnetwork}}.
+#'   further arguments passed to methods, see \code{\link{DDEmorris.default}}.
 #'
 #' @details
 #'   There are two methods for this generic function: 
-#'   \code{\link{DDEmorris.default}} (for general DDE models) and
-#'   \code{\link{DDEmorris.DDEnetwork}} (for objects of class \code{DDEnetwork},
-#'   see package \code{DDEnetwork}).
+#'   \code{\link{DDEmorris.default}} (for general DDE models).
 #'
 #' @author Frank Weber
-#' @seealso \code{\link{DDEmorris.default}, \link{DDEmorris.DDEnetwork}}
+#' @seealso \code{\link{DDEmorris.default}
 #' 
 #' @export
 #'

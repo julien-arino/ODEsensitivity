@@ -8,11 +8,9 @@ DDEmorris(mod, ...)
 }
 \arguments{
 \item{mod}{either a model function supplied in the manner as needed for 
-\code{\link[deSolve]{ode}} (for \code{\link{DDEmorris.default}}) or an 
-object of class \code{DDEnetwork} (for \code{\link{DDEmorris.DDEnetwork}}).}
+\code{\link[deSolve]{ode}} (for \code{\link{DDEmorris.default}}).}
 
-\item{...}{further arguments passed to methods, see \code{\link{DDEmorris.default}} 
-and \code{\link{DDEmorris.DDEnetwork}}.}
+\item{...}{further arguments passed to methods, see \code{\link{DDEmorris.default}}.}
 }
 \description{
 \code{DDEmorris} is the generic function for performing a sensitivity 
@@ -20,12 +18,10 @@ and \code{\link{DDEmorris.DDEnetwork}}.}
 }
 \details{
 There are two methods for this generic function: 
-  \code{\link{DDEmorris.default}} (for general DDE models) and
-  \code{\link{DDEmorris.DDEnetwork}} (for objects of class \code{DDEnetwork},
-  see package \code{DDEnetwork}).
+  \code{\link{DDEmorris.default}} (for general DDE models).
 }
 \seealso{
-\code{\link{DDEmorris.default}, \link{DDEmorris.DDEnetwork}}
+
 }
 \author{
 Frank Weber
