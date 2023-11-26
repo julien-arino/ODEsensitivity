@@ -16,4 +16,4 @@ run the sensitivity analysis on variables with class `ODEnetwork`. A detailed
 plotting function provides outputs on the calculations.
 
 # This fork
-Adding slight modifications of the code to handle delay differential equations (used different file names).
+Adding slight modifications of the code to handle delay differential equations (used different file names). Work in progress: for now, DDEmorris and DDEsobol work but are not documented.
