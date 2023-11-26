@@ -1,4 +1,4 @@
-Sensitivity Analysis of ODE Models (a fork)
+Sensitivity Analysis of ODE Models
 ==============
 
 [![CRAN status](https://www.r-pkg.org/badges/version/ODEsensitivity)](https://cran.r-project.org/package=ODEsensitivity)
