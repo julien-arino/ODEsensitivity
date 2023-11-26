@@ -4,10 +4,19 @@
 \alias{ODEsobol.ODEnetwork}
 \title{Sobol' Sensitivity Analysis for Objects of Class \code{ODEnetwork}}
 \usage{
-\method{ODEsobol}{ODEnetwork}(mod, pars, times, n = 1000, rfuncs = "runif",
-  rargs = "min = 0, max = 1", sobol_method = "Martinez",
-  ode_method = "lsoda", parallel_eval = FALSE, parallel_eval_ncores = NA,
-  ...)
+\method{ODEsobol}{ODEnetwork}(
+  mod,
+  pars,
+  times,
+  n = 1000,
+  rfuncs = "runif",
+  rargs = "min = 0, max = 1",
+  sobol_method = "Martinez",
+  ode_method = "lsoda",
+  parallel_eval = FALSE,
+  parallel_eval_ncores = NA,
+  ...
+)
 }
 \arguments{
 \item{mod}{[\code{ODEnetwork}]\cr

@@ -4,10 +4,20 @@
 \alias{ODEmorris.ODEnetwork}
 \title{Morris Screening for Objects of Class \code{ODEnetwork}}
 \usage{
-\method{ODEmorris}{ODEnetwork}(mod, pars, times, binf = 0, bsup = 1,
-  r = 500, design = list(type = "oat", levels = 10, grid.jump = 1),
-  scale = TRUE, ode_method = "lsoda", parallel_eval = FALSE,
-  parallel_eval_ncores = NA, ...)
+\method{ODEmorris}{ODEnetwork}(
+  mod,
+  pars,
+  times,
+  binf = 0,
+  bsup = 1,
+  r = 500,
+  design = list(type = "oat", levels = 10, grid.jump = 1),
+  scale = TRUE,
+  ode_method = "lsoda",
+  parallel_eval = FALSE,
+  parallel_eval_ncores = NA,
+  ...
+)
 }
 \arguments{
 \item{mod}{[\code{ODEnetwork}]\cr

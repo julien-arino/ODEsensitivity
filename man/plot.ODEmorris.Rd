@@ -4,9 +4,17 @@
 \alias{plot.ODEmorris}
 \title{Plot of the Results of Morris Screening for Objects of Class \code{ODEmorris}}
 \usage{
-\method{plot}{ODEmorris}(x, pars_plot = NULL, state_plot = names(x)[1],
-  kind = "sep", colors_pars = NULL, main_title = NULL,
-  legendPos = "outside", type = "l", ...)
+\method{plot}{ODEmorris}(
+  x,
+  pars_plot = NULL,
+  state_plot = names(x)[1],
+  kind = "sep",
+  colors_pars = NULL,
+  main_title = NULL,
+  legendPos = "outside",
+  type = "l",
+  ...
+)
 }
 \arguments{
 \item{x}{[\code{ODEmorris}]\cr

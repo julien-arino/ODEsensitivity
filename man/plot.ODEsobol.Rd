@@ -5,9 +5,16 @@
 \title{Plot of the Results of Sobol' Sensitivity Analysis for Objects of Class 
 \code{ODEsobol}}
 \usage{
-\method{plot}{ODEsobol}(x, pars_plot = NULL, state_plot = names(x)[1],
-  colors_pars = NULL, main_title = NULL, legendPos = "outside",
-  type = "l", ...)
+\method{plot}{ODEsobol}(
+  x,
+  pars_plot = NULL,
+  state_plot = names(x)[1],
+  colors_pars = NULL,
+  main_title = NULL,
+  legendPos = "outside",
+  type = "l",
+  ...
+)
 }
 \arguments{
 \item{x}{[\code{ODEsobol}]\cr
