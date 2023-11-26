@@ -257,8 +257,9 @@ DDEsobol.default <- function(mod,
       # Run one_par() on parallel nodes:
       local_cluster <- parallel::makePSOCKcluster(names = parallel_eval_ncores)
       parallel::clusterExport(local_cluster, 
-                              varlist = c("dede", "lag", "mod", "state_init", "z", "X",
-                                          "times", "timesNum", "ode_method"),
+                              varlist = c("dede", "lagvalue", "mod", "state_init", 
+                                          "z", "X", "times", "timesNum", 
+                                          "ode_method"),
                               envir = environment())
       res_per_par <- parallel::parSapply(local_cluster, 1:nrow(X), one_par, 
                                          simplify = "array")
@@ -300,7 +301,7 @@ DDEsobol.default <- function(mod,
   ST_by_state <- sobol_process(x, pars, times)
   
   # Return:
-  class(ST_by_state) <- "DDEsobol"
+  class(ST_by_state) <- "ODEsobol"
   attr(ST_by_state, "sobol_method") <- sobol_method
   return(ST_by_state)
 }

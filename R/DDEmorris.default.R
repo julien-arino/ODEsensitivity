@@ -232,8 +232,9 @@ DDEmorris.default <- function(mod,
       # Run one_par() on parallel nodes:
       local_cluster <- parallel::makePSOCKcluster(names = parallel_eval_ncores)
       parallel::clusterExport(local_cluster, 
-                              varlist = c("dede", "lag", "mod", "state_init", "z", "X",
-                                          "times", "timesNum", "ode_method"),
+                              varlist = c("dede", "lagvalue", "mod", "state_init",
+                                          "z", "X", "times", "timesNum", 
+                                          "ode_method"),
                               envir = environment())
       res_per_par <- parallel::parSapply(local_cluster, 1:nrow(X), one_par, 
                                          simplify = "array")
@@ -307,6 +308,6 @@ DDEmorris.default <- function(mod,
   }
   
   # Return:
-  class(out_all_states) <- "DDEmorris"
+  class(out_all_states) <- "ODEmorris"
   return(out_all_states)
 }
