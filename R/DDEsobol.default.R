@@ -1,8 +1,8 @@
-#' @title Sobol' Sensitivity Analysis for General ODE Models
+#' @title Sobol' Sensitivity Analysis for General DDE Models
 #'
 #' @description
-#'  \code{ODEsobol.default} is the default method of \code{\link{ODEsobol}}. It
-#'  performs the variance-based Sobol' sensitivity analysis for general ODE 
+#'  \code{DDEsobol.default} is the default method of \code{\link{DDEsobol}}. It
+#'  performs the variance-based Sobol' sensitivity analysis for general DDE 
 #'  models.
 #'
 #' @param mod [\code{function(Time, State, Pars)}]\cr
@@ -40,7 +40,7 @@
 #'   method to be used for solving the differential equations, see 
 #'   \code{\link[deSolve]{ode}}. Defaults to \code{"lsoda"}.
 #' @param parallel_eval [\code{logical(1)}]\cr
-#'   logical indicating if the evaluation of the ODE model shall be performed
+#'   logical indicating if the evaluation of the DDE model shall be performed
 #'   parallelized.
 #' @param parallel_eval_ncores [\code{integer(1)}]\cr
 #'   number of processor cores to be used for parallelization. Only applies if
@@ -49,7 +49,7 @@
 #' @param ... further arguments passed to or from other methods.
 #'
 #' @return 
-#'   List of length \code{length(state_init)} and of class \code{ODEsobol} 
+#'   List of length \code{length(state_init)} and of class \code{DDEsobol} 
 #'   containing in each element a list of the Sobol' sensitivity analysis 
 #'   results for the corresponding \code{state_init}-variable (i.e. first order 
 #'   sensitivity indices \code{S} and total sensitivity indices \code{T}) for 
@@ -60,7 +60,7 @@
 #'
 #' @details
 #'   Function \code{\link[deSolve]{ode}} from \code{\link[deSolve]{deSolve}} is 
-#'   used to solve the ODE system.
+#'   used to solve the DDE system.
 #'   
 #'   The sensitivity analysis is done for all state variables and all
 #'   timepoints simultaneously. If \code{sobol_method = "Jansen"},
@@ -72,7 +72,7 @@
 #'
 #' @note 
 #'   If the evaluation of the model function takes too long, it might be 
-#'   helpful to try a different type of ODE-solver (argument \code{ode_method}). 
+#'   helpful to try a different type of DDE-solver (argument \code{ode_method}). 
 #'   The \code{ode_method}s \code{"vode"}, \code{"bdf"}, \code{"bdf_d"}, 
 #'   \code{"adams"}, \code{"impAdams"} and \code{"impAdams_d"} 
 #'   might be faster than the standard \code{ode_method} \code{"lsoda"}.
@@ -94,7 +94,7 @@
 #'   69, Part 5, 741--796.
 #' @seealso \code{\link[sensitivity]{soboljansen},
 #'   \link[sensitivity]{sobolmartinez},
-#'   \link{plot.ODEsobol}}
+#'   \link{plot.DDEsobol}}
 #' 
 #' @examples
 #' ##### Lotka-Volterra equations #####
@@ -125,7 +125,7 @@
 #' # recommended):
 #' # Warning: The following code might take very long!
 #' \donttest{
-#' LVres_sobol <- ODEsobol(mod = LVmod,
+#' LVres_sobol <- DDEsobol(mod = LVmod,
 #'                         pars = LVpars,
 #'                         state_init = LVinit,
 #'                         times = LVtimes,
@@ -151,7 +151,7 @@
 #' }
 #' # Warning: The following code might take very long!
 #' \donttest{
-#' FHNres_sobol <- ODEsobol(mod = FHNmod,
+#' FHNres_sobol <- DDEsobol(mod = FHNmod,
 #'                          pars = c("a", "b", "s"),
 #'                          state_init = c(Voltage = -1, Current = 1),
 #'                          times = seq(0.1, 50, by = 5),
@@ -169,7 +169,7 @@
 #' # completely arbitrarily):
 #' # Warning: The following code might take very long!
 #' \donttest{
-#' demo_dists <- ODEsobol(mod = FHNmod,
+#' demo_dists <- DDEsobol(mod = FHNmod,
 #'                        pars = c("a", "b", "s"),
 #'                        state_init = c(Voltage = -1, Current = 1),
 #'                        times = seq(0.1, 50, by = 5),
@@ -187,7 +187,7 @@
 #' @export
 #'
 
-ODEsobol.default <- function(mod,
+DDEsobol.default <- function(mod,
                              pars,
                              state_init,
                              times,
@@ -242,22 +242,22 @@ ODEsobol.default <- function(mod,
   # Number of timepoints:
   timesNum <- length(times)
   
-  # Adapt the ODE model for argument "model" of soboljansen() resp.
+  # Adapt the DDE model for argument "model" of soboljansen() resp.
   # sobolmartinez():
   model_fit <- function(X){
     # Input: Matrix X with k columns, containing the random parameter 
     # combinations.
     colnames(X) <- pars
     one_par <- function(i){
-      # Resolve the ODE system by using ode() from the package "deSolve":
-      ode(state_init, times = c(0, times), mod, parms = X[i, ], 
-          method = ode_method)[2:(timesNum + 1), 2:(z + 1), drop = FALSE]
+      # Resolve the DDE system by using ode() from the package "deSolve":
+      dede(state_init, times = c(0, times), mod, parms = X[i, ], 
+           method = ode_method)[2:(timesNum + 1), 2:(z + 1), drop = FALSE]
     }
     if(parallel_eval){
       # Run one_par() on parallel nodes:
       local_cluster <- parallel::makePSOCKcluster(names = parallel_eval_ncores)
       parallel::clusterExport(local_cluster, 
-                              varlist = c("ode", "mod", "state_init", "z", "X",
+                              varlist = c("dede", "mod", "state_init", "z", "X",
                                           "times", "timesNum", "ode_method"),
                               envir = environment())
       res_per_par <- parallel::parSapply(local_cluster, 1:nrow(X), one_par, 
@@ -300,7 +300,7 @@ ODEsobol.default <- function(mod,
   ST_by_state <- sobol_process(x, pars, times)
   
   # Return:
-  class(ST_by_state) <- "ODEsobol"
+  class(ST_by_state) <- "DDEsobol"
   attr(ST_by_state, "sobol_method") <- sobol_method
   return(ST_by_state)
 }

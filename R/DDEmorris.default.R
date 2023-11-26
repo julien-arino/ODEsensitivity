@@ -1,8 +1,8 @@
 #' @title Morris Screening for General ODE Models
 #'
 #' @description
-#' \code{ODEmorris.default} is the default method of \code{\link{ODEmorris}}. It
-#' performs a sensitivity analysis for general ODE models using the Morris 
+#' \code{DDEmorris.default} is the default method of \code{\link{DDEmorris}}. It
+#' performs a sensitivity analysis for general DDE models using the Morris 
 #' screening method.
 #'
 #' @param mod [\code{function(Time, State, Pars)}]\cr
@@ -41,7 +41,7 @@
 #'   method to be used for solving the differential equations, see 
 #'   \code{\link[deSolve]{ode}}. Defaults to \code{"lsoda"}.
 #' @param parallel_eval [\code{logical(1)}]\cr
-#'   logical indicating if the evaluation of the ODE model shall be performed
+#'   logical indicating if the evaluation of the DDE model shall be performed
 #'   parallelized.
 #' @param parallel_eval_ncores [\code{integer(1)}]\cr
 #'   number of processor cores to be used for parallelization. Only applies if
@@ -50,7 +50,7 @@
 #' @param ... further arguments passed to or from other methods.
 #'
 #' @return 
-#'   List of class \code{ODEmorris} of length \code{length(state_init)} 
+#'   List of class \code{DDEmorris} of length \code{length(state_init)} 
 #'   containing in each element a matrix for one state variable. The
 #'   matrices themselves contain the Morris screening results for all timepoints 
 #'   (rows: \code{mu, mu.star} and \code{sigma} for every parameter; columns: 
@@ -58,19 +58,19 @@
 #'
 #' @details
 #'   Function \code{\link[deSolve]{ode}} from \code{\link[deSolve]{deSolve}} is 
-#'   used to solve the ODE system.
+#'   used to solve the DDE system.
 #'   
 #'   The sensitivity analysis is done for all state variables and all
 #'   timepoints simultaneously using \code{\link[sensitivity]{morris}} from the 
 #'   package \code{\link[sensitivity]{sensitivity}}.
 #'   
-#'   For non-ODE models, values for \code{r} are typically between 10 and 50.
-#'   However, much higher values are recommended for ODE models (the default is
+#'   For non-DDE models, values for \code{r} are typically between 10 and 50.
+#'   However, much higher values are recommended for DDE models (the default is
 #'   \code{r = 500}).
 #' 
 #' @note 
 #'   If the evaluation of the model function takes too long, it might be helpful 
-#'   to try another ODE-solver (argument \code{ode_method}). The 
+#'   to try another DDE-solver (argument \code{ode_method}). The 
 #'   \code{ode_method}s \code{"vode"}, \code{"bdf"}, \code{"bdf_d"}, 
 #'   \code{"adams"}, \code{"impAdams"} and \code{"impAdams_d"} might be faster 
 #'   than the default \code{"lsoda"}.
@@ -84,7 +84,7 @@
 #'   \emph{Parameter estimation for differential equations: a generalized 
 #'   smoothing approach}, Journal of the Royal Statistical Society, Series B, 
 #'   69, Part 5, 741--796.
-#' @seealso \code{\link[sensitivity]{morris}, \link{plot.ODEmorris}}
+#' @seealso \code{\link[sensitivity]{morris}, \link{plot.DDEmorris}}
 #' 
 #' @examples
 #' ##### Lotka-Volterra equations #####
@@ -114,7 +114,7 @@
 #' set.seed(7292)
 #' # Warning: The following code might take very long!
 #' \donttest{
-#' LVres_morris <- ODEmorris(mod = LVmod,
+#' LVres_morris <- DDEmorris(mod = LVmod,
 #'                           pars = LVpars,
 #'                           state_init = LVinit,
 #'                           times = LVtimes,
@@ -141,7 +141,7 @@
 #' }
 #' # Warning: The following code might take very long!
 #' \donttest{
-#' FHNres_morris <- ODEmorris(mod = FHNmod,
+#' FHNres_morris <- DDEmorris(mod = FHNmod,
 #'                            pars = c("a", "b", "s"),
 #'                            state_init = c(Voltage = -1, Current = 1),
 #'                            times = seq(0.1, 50, by = 5),
@@ -159,7 +159,7 @@
 #' @export
 #'
 
-ODEmorris.default <- function(mod,
+DDEmorris.default <- function(mod,
                               pars,
                               state_init,
                               times,
@@ -218,21 +218,21 @@ ODEmorris.default <- function(mod,
   # Number of timepoints:
   timesNum <- length(times)
   
-  # Adapt the ODE model for argument "model" of morris():
+  # Adapt the DDE model for argument "model" of morris():
   model_fit <- function(X){
     # Input: Matrix X with k columns, containing the random parameter 
     # combinations.
     colnames(X) <- pars
     one_par <- function(i){
-      # Resolve the ODE system by using ode() from the package "deSolve":
-      ode(state_init, times = c(0, times), mod, parms = X[i, ], 
-          method = ode_method)[2:(timesNum + 1), 2:(z + 1), drop = FALSE]
+      # Resolve the DDE system by using dede() from the package "deSolve":
+      dede(state_init, times = c(0, times), mod, parms = X[i, ], 
+           method = ode_method)[2:(timesNum + 1), 2:(z + 1), drop = FALSE]
     }
     if(parallel_eval){
       # Run one_par() on parallel nodes:
       local_cluster <- parallel::makePSOCKcluster(names = parallel_eval_ncores)
       parallel::clusterExport(local_cluster, 
-                              varlist = c("ode", "mod", "state_init", "z", "X",
+                              varlist = c("dede", "mod", "state_init", "z", "X",
                                           "times", "timesNum", "ode_method"),
                               envir = environment())
       res_per_par <- parallel::parSapply(local_cluster, 1:nrow(X), one_par, 
@@ -282,7 +282,7 @@ ODEmorris.default <- function(mod,
   names(out_all_states) <- names(mu)
   
   # Throw a warning if NAs occur (probably there are parameter combinations
-  # which are not suitable, so the ODE system can't be solved):
+  # which are not suitable, so the DDE system can't be solved):
   NA_check_mu <- function(M){
     any(is.na(M[1:(1 + k*2), ]))
   }
@@ -290,10 +290,10 @@ ODEmorris.default <- function(mod,
     all(is.na(M[(2 + k*2):(1 + k*3), ]))
   }
   if(any(unlist(lapply(out_all_states, NA_check_mu)))){
-    warning(paste("The ODE system can't be solved. This might be due to", 
+    warning(paste("The DDE system can't be solved. This might be due to", 
       "arising unrealistic parameters by means of Morris's Screening. Use",
-      "ODEsobol() instead or set binf and bsup differently together with",
-      "scale = TRUE. It might also be helpful to try another ODE-solver by",
+      "DDEsobol() instead or set binf and bsup differently together with",
+      "scale = TRUE. It might also be helpful to try another DDE-solver by",
       "using the \"ode_method\"-argument."))
   } else if(all(unlist(lapply(out_all_states, NA_check_sigma))) && r[1] == 1){
     warning("Calculation of sigma requires r >= 2.")
@@ -307,6 +307,6 @@ ODEmorris.default <- function(mod,
   }
   
   # Return:
-  class(out_all_states) <- "ODEmorris"
+  class(out_all_states) <- "DDEmorris"
   return(out_all_states)
 }
