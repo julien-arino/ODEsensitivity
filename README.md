@@ -1,4 +1,4 @@
-Sensitivity Analysis of ODE Models
+Sensitivity Analysis of ODE Models (a fork)
 ==============
 
 [![CRAN status](https://www.r-pkg.org/badges/version/ODEsensitivity)](https://cran.r-project.org/package=ODEsensitivity)
@@ -14,3 +14,6 @@ The package utilizes the ode interface from `deSolve` and connects it with the
 sensitivity analysis from `sensitivity`. Additionally we add a method to
 run the sensitivity analysis on variables with class `ODEnetwork`. A detailed
 plotting function provides outputs on the calculations.
+
+# This fork
+Added slight modifications of the code to handle delay differential equations (used different file names).
